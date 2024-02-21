@@ -35,7 +35,6 @@ jobs:
           pip install mkdocs-material 
       - name: Build MkDocs
         run: |
-          cd documentacion/guia-completa-mkdocs
           mkdocs build
       - name: Push the documentation in a branch
         uses: s0/git-publish-subdir-action@develop
