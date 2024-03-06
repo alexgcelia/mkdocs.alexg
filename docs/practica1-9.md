@@ -2,6 +2,8 @@
 Este repositorio es para la práctica01.9 de Git del módulo IAW
 Arquitectura de una aplicación web LAMP en dos niveles
 
+![lamp](assets/lamp.png)
+
 1.	Creamos dos máquinas instancia EC2 en AWS iguales una para el frontend y otra para el backend.
 
 2.	Le ponemos un nombre (practica01.9-frontend y practica01.9-backend respectivamente) y seleccionamos la Amazon Machine Image 

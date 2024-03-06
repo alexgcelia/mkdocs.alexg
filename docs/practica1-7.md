@@ -1,6 +1,8 @@
 # practica01.7-iaw
 Este repositorio es para la práctica01.7 de Git del módulo IAW
 
+![wp-cli](assets/1-7.jpg)
+
 1.	Usaremos la misma máquina de la práctica01.6-iaw
 
 2. Iremos al laboratorio de nuestro AWS y descargaremos la key SSH en formato PEM. Renombramos el archivo a "vockey.pem" y la colocamos en una carpeta. 
