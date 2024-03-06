@@ -2,38 +2,28 @@ site_name: IAW
 
 nav:
     - Principal: index.md
+    - Practica1.7: practica1-7.md
+    - Practica1.9: practica1-9.md
     - Acerca de: about.md
 
 theme:
   name: material
   language: es
+  extra:
+    social:
+      - icon: assets/insta.jpg
+        link: https://www.instagram.com/aalexx_63/
   features: 
     - navigation.indexes
+    - navigation.instant
     - navigation.sections
     - navigation.tabs
     - announce.dismiss
   logo: assets/logo.png
   palette:
-    - scheme: slate
     - primary: deep orange
-    # Paleta para modo claro
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-
-    # Paleta para modo oscuro
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+    - scheme: slate
   plugins:
   - search
   font:
     code: Oswald
-  extra:
-    social:
-      - icon: assets/insta.jpg
-        link: https://www.instagram.com/aalexx_63/

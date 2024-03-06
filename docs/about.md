@@ -1,3 +1,3 @@
 # About
 
-Este es el contenido del archivo about.md
+Alberto Freites es asistente administrativo con diez años de experiencia trabajando junto al equipo ejecutivo de una empresa Fortune 500. Freites se especializa en tecnología administrativa y es responsable de educar a otros empleados sobre el uso de sistemas y aplicaciones progresivos, incluidos software de contabilidad, procedimientos de comunicación masiva, y aplicaciones organizacionales. Alberto es una persona de fuerza motivadora en el lugar de trabajo, quien utiliza su actitud positiva, y energía incansable para alentar a otros a trabajar duro y tener éxito. Freites se inspira diariamente en su esposa y sus tres hijos. En su tiempo libre, a Alberto Freites le gusta caminar, nadar la playa, y jugar videojuegos con sus hijos.
