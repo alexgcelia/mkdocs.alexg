@@ -12,7 +12,7 @@ theme:
     - navigation.sections
     - navigation.tabs
     - announce.dismiss
-  logo: assets/logo.jpg
+  logo: assets/logo.png
   palette:
     - scheme: slate
     - primary: deep orange
