@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../practica1-7/">
+      
+      
+        <link rel="next" href="../about/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Blog - IAW</title>
+        <title>Practica1.9 - IAW</title>
       
     
     
@@ -67,6 +71,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#practica019-iaw" class="md-skip">
+          Saltar a contenido
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -96,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Blog
+              Practica1.9
             
           </span>
         </div>
@@ -215,9 +224,11 @@
         
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../practica1-9/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
     
@@ -322,10 +333,19 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../practica1-9/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -334,6 +354,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -375,6 +396,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -389,9 +412,202 @@
                   
 
 
-  <h1>Blog</h1>
+<h1 id="practica019-iaw">practica01.9-iaw</h1>
+<p>Este repositorio es para la práctica01.9 de Git del módulo IAW
+Arquitectura de una aplicación web LAMP en dos niveles</p>
+<ol>
+<li>
+<p>Creamos dos máquinas instancia EC2 en AWS iguales una para el frontend y otra para el backend.</p>
+</li>
+<li>
+<p>Le ponemos un nombre (practica01.9-frontend y practica01.9-backend respectivamente) y seleccionamos la Amazon Machine Image </p>
+</li>
+<li>
+<p>Creamos 2 grupos de seguridad diferentes para estas máquinas. Para la del frontend abriremos los puertos 80 (HTTP), 22 (SSH) y todos los ICMP IPv4. Mientras que para el backend abriremos los puertos 3306 (MYSQL/Aurora), 22 (SSH) y todos los ICMP IPv4.</p>
+</li>
+<li>
+<p>Seleccionamos el tamaño que queremos que tenga nuestra máquina, en este caso la t2.small. En par de claves seleccionaremos la de vockey y creando la instancia debemos abrir los puertos para conectarnos por SSH y poder acceder por HTTP/HTTPS.</p>
+</li>
+<li>
+<p>Creamos un par de claves (pública y privada) para conectar por SSH con las instancias. Nos dirigiremos a "Direcciones IP elásticas", creamos dos y las asignamos a las instancias EC2 correspondientes.</p>
+</li>
+<li>
+<p>Una vez asignada, iremos al laboratorio de nuestro AWS y descargaremos la key SSH en formato PEM. Renombramos el archivo a "vockey.pem" y la colocamos en una carpeta. </p>
+</li>
+<li>
+<p>Nos conectamos a la máquina mediante ssh con el comando "ssh -i "vockey.pem" ubuntu@[IP publica de la máquina]".</p>
+</li>
+<li>
+<p>Ahora nos dirigiremos al Visual Studio Code, descargamos la extensión "Remote - SSH" para poder conectarnos a las máquinas. Con CTRL + SHIFT + P abriremos el archivo de configuración de SSH y colocamos los siguientes datos.</p>
+</li>
+</ol>
+<h1 id="creacion-de-la-carpeta-conf-y-el-archivo-000-defaultconf-archivo-de-configuracion">Creación de la carpeta conf y el archivo 000-default.conf (Archivo de configuración)</h1>
+<h3 id="configuracion">Configuración</h3>
+<pre><code>ServerSignature Off
+ServerTokens Prod
+&lt;VirtualHost *:80&gt;
+  #ServerName www.example.com
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/html
 
-<p>mkdocs</p>
+  &lt;Directory &quot;/var/www/html&quot;&gt;
+    AllowOverride All
+  &lt;/Directory&gt;
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+</code></pre>
+<h1 id="creacion-de-la-carpeta-htaccess-y-archivo-htaccess">Creación de la carpeta htaccess y archivo .htaccess</h1>
+<pre><code># BEGIN WordPress
+&lt;IfModule mod_rewrite.c&gt;
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+&lt;/IfModule&gt;
+# END WordPress
+</code></pre>
+<h1 id="creacion-de-la-carpeta-php-y-archivo-indexphp">Creación de la carpeta php y archivo index.php</h1>
+<pre><code>&lt;?php
+
+phpinfo();
+
+?&gt;
+</code></pre>
+<h1 id="creacion-de-la-carpeta-scripts-y-archivo-variables-env">Creación de la carpeta scripts y archivo variables .env</h1>
+<pre><code>MYSQL_PRIVATE_IP=172.31.90.21
+
+WORDPRESS_DB_NAME=wordpress
+WORDPRESS_DB_USER=alexg
+WORDPRESS_DB_PASSWORD=1234
+WORDPRESS_DB_HOST=172.31.90.21
+IP_CLIENTE_MYSQL=172.31.88.174
+TEMA=mindscape
+PLUGIN=wps-hide-login
+PLUGIN2=jetpack
+
+WORDPRESS_TITLE=&quot;Sitio web de IAW&quot;
+WORDPRESS_ADMIN_USER=admin
+WORDPRESS_ADMIN_PASS=admin
+WORDPRESS_ADMIN_EMAIL=demo@demo.es
+
+CB_MAIL=alexg@iaw.com
+CB_DOMAIN=practica9.hopto.org
+</code></pre>
+<h1 id="creacion-del-install_lamp_frontendsh">Creación del install_lamp_frontend.sh</h1>
+<h2 id="muestra-todos-los-comandos-que-se-van-ejecutando">Muestra todos los comandos que se van ejecutando</h2>
+<p>set -ex</p>
+<h2 id="actualizamos-los-repositorios">Actualizamos los repositorios</h2>
+<p>apt update</p>
+<h2 id="actualizamos-los-paquetes">Actualizamos los paquetes</h2>
+<p>apt upgrade -y</p>
+<h2 id="instalamos-el-servidor-web-apache">Instalamos el servidor web Apache</h2>
+<p>apt install apache2 -y</p>
+<h2 id="instalamos-php">Instalamos PHP</h2>
+<p>apt install php libapache2-mod-php php-mysql -y</p>
+<h2 id="copiamos-le-archivo-conf-de-apache">Copiamos le archivo conf de apache</h2>
+<p>cp ../conf/000-default.conf /etc/apache2/sites-available</p>
+<h2 id="habilitamos-el-modulo-rewrite">Habilitamos el módulo rewrite</h2>
+<p>a2enmod rewrite</p>
+<h2 id="reiniciamos-el-servicio-de-apache">Reiniciamos el servicio de Apache</h2>
+<p>systemctl restart apache2</p>
+<h2 id="copiamos-el-archivo-php">Copiamos el archivo .php</h2>
+<p>cp ../php/index.php /var/www/html</p>
+<h1 id="creacion-del-install_lamp_backendsh">Creación del install_lamp_backend.sh</h1>
+<h2 id="muestra-todos-los-comandos-que-se-van-ejecutando_1">Muestra todos los comandos que se van ejecutando</h2>
+<p>set -ex</p>
+<h2 id="anadimos-env">Añadimos .env</h2>
+<p>source .env</p>
+<h2 id="actualizamos-los-repositorios_1">Actualizamos los repositorios</h2>
+<p>apt update</p>
+<h2 id="actualizamos-los-paquetes_1">Actualizamos los paquetes</h2>
+<p>apt upgrade -y</p>
+<h2 id="instalamos-el-gestor-de-bases-de-datos-mysql">Instalamos el gestor de bases de datos MySQL</h2>
+<p>apt install mysql-server -y</p>
+<h2 id="configuramos-mysql-para-que-solo-acepte-conexiones-desde-la-ip-privada">Configuramos MySQL para que solo acepte conexiones desde la IP privada</h2>
+<p>sed -i "s/127.0.0.1/$MYSQL_PRIVATE_IP/" /etc/mysql/mysql.conf.d/mysqld.cnf</p>
+<h2 id="reiniciamos-el-servicio-de-mysql">Reiniciamos el servicio de MySQL</h2>
+<p>systemctl restart mysql</p>
+<h1 id="creacion-del-setup_letsencrypt_certificatesh">Creación del setup_letsencrypt_certificate.sh</h1>
+<h2 id="muestra-todos-los-comandos-que-se-van-ejecutando_2">Muestra todos los comandos que se van ejecutando</h2>
+<p>set -ex</p>
+<h2 id="actualizamos-los-repositorios_2">Actualizamos los repositorios</h2>
+<p>apt update</p>
+<h2 id="actualizamos-los-paquetes_2">Actualizamos los paquetes</h2>
+<p>apt upgrade -y</p>
+<h2 id="importamos-el-archivo-de-variables-env">Importamos el archivo de variables .env</h2>
+<p>source .env</p>
+<h2 id="instalamos-y-actualizamos-snapd">Instalamos y actualizamos snapd</h2>
+<p>snap install core &amp;&amp; snap refresh core</p>
+<h2 id="eliminamos-cualquier-instalacion-previa-de-certbot-con-apt">Eliminamos cualquier instalación previa de certbot con apt</h2>
+<p>apt remove certbot</p>
+<h2 id="instalamos-la-aplicacion-certbot">Instalamos la aplicación certbot</h2>
+<p>snap install --classic certbot</p>
+<h2 id="creamos-un-alias-para-la-aplicacion-certbot">Creamos un alias para la aplicación certbot</h2>
+<p>ln -fs /snap/bin/certbot /usr/bin/certbot</p>
+<h2 id="ejecutamos-el-comando-certbot">Ejecutamos el comando certbot</h2>
+<p>certbot --apache -m $CB_MAIL --agree-tos --no-eff-email -d $CB_DOMAIN --non-interactive</p>
+<h1 id="creacion-del-deploy_frontendsh">Creación del deploy_frontend.sh</h1>
+<h2 id="muestra-todos-los-comandos-que-se-van-ejecutando_3">Muestra todos los comandos que se van ejecutando</h2>
+<p>set -ex</p>
+<h2 id="actualizamos-los-repositorios_3">Actualizamos los repositorios</h2>
+<p>apt update</p>
+<h2 id="actualizamos-los-paquetes_3">Actualizamos los paquetes</h2>
+<p>apt upgrade -y</p>
+<h2 id="importamos-el-archivo-de-variables-env_1">Importamos el archivo de variables .env</h2>
+<p>source .env</p>
+<h2 id="eliminamos-descargas-previas-de-wp-cli">Eliminamos descargas previas de wp-cli</h2>
+<p>rm -rf /tmp/wp-cli.phar</p>
+<h2 id="descargamos-la-utilidad-wp-cli">Descargamos la utilidad wp-cli</h2>
+<p>wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp</p>
+<h2 id="damos-permisos-de-ejecucion-al-archivo-wp-cliphar">Damos permisos de ejecución al archivo wp-cli.phar</h2>
+<p>chmod +x /tmp/wp-cli.phar</p>
+<h2 id="movemos-la-utilidad-wp-cli-al-directorio-usrlocalbin">Movemos la utilidad wp-cli al directorio /usr/local/bin</h2>
+<p>mv /tmp/wp-cli.phar /usr/local/bin/wp</p>
+<h2 id="eliminamos-instalaciones-previas-de-wordpress">Eliminamos instalaciones previas de WordPress</h2>
+<p>rm -rf /var/www/html/*</p>
+<h2 id="descargamos-el-codigo-fuente-ed-wordpress-en-varwwwhtml">Descargamos el código fuente ed WordPress en /var/www/html</h2>
+<p>wp core download --locale=es_ES --path=/var/www/html --allow-root</p>
+<h2 id="creamos-el-archivo-wp-config">Creamos el archivo wp-config</h2>
+<p>wp config create \
+  --dbname=$WORDPRESS_DB_NAME \
+  --dbuser=$WORDPRESS_DB_USER \
+  --dbpass=$WORDPRESS_DB_PASSWORD \
+  --dbhost=$WORDPRESS_DB_HOST \
+  --path=/var/www/html \
+  --allow-root</p>
+<h1 id="instalamos-wordpress">Instalamos WordPress</h1>
+<p>wp core install \
+  --url=$CB_DOMAIN \
+  --title="$WORDPRESS_DB_TITLE" \
+  --admin_user=$WORDPRESS_ADMIN_USER \
+  --admin_password=$WORDPRESS_ADMIN_PASS \
+  --admin_email=$WORDPRESS_ADMIN_EMAIL \
+  --path=/var/www/html \
+  --allow-root</p>
+<h2 id="actualizamos-los-plugins">Actualizamos los plugins</h2>
+<p>wp core update --path=/var/www/html --allow-root</p>
+<h2 id="actualizamos-los-temas">Actualizamos los temas</h2>
+<p>wp theme update --all --path=/var/www/html --allow-root</p>
+<h2 id="instalamos-un-tema">Instalamos un tema</h2>
+<p>wp theme install $TEMA --activate --path=/var/www/html --allow-root</p>
+<h2 id="actualizamos-los-plugins_1">Actualizamos los plugins</h2>
+<p>wp plugin update --all --path=/var/www/html --allow-root</p>
+<h2 id="instalamos-los-plugins">Instalamos los plugins</h2>
+<p>wp plugin install $PLUGIN --activate --path=/var/www/html --allow-root
+wp plugin install $PLUGIN2 --activate --path=/var/www/html --allow-root</p>
+<h2 id="cambiamos-la-estructura-de-las-url">Cambiamos la estructura de las url</h2>
+<p>wp rewrite structure '/%postname%/' --path=/var/www/html --allow-root</p>
+<h2 id="cambiamos-el-login-por-lo-que-nosotros-queramos-del-plugin-hide-login">Cambiamos el /login por lo que nosotros queramos del plugin hide-login</h2>
+<p>wp option update whl_page 'acceso' --path=/var/www/html --allow-root</p>
+<h2 id="copiamos-el-nuevo-archivo-htaccess-en-varwwwhtml">Copiamos el nuevo archivo .htaccess en /var/www/html</h2>
+<p>cp ../htaccess/.htaccess /var/www/html</p>
+<h2 id="cambiamos-los-permisos">Cambiamos los permisos</h2>
+<p>chown -R www-data:www-data /var/www/html
+chown -R www-data:www-data /var/www/html</p>
 
 
 
